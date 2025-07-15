@@ -59,9 +59,9 @@ p {
 
 /* classes that makes the modals work */
 
-/* .hidden {
+.hidden {
     display: none;
-} */
+}
 
 .modal {
     position: absolute;

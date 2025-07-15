@@ -47,7 +47,7 @@ document.querySelector(".again").addEventListener("click", function () {
     changeElements(".number", "?");
     document.querySelector(".number").style.width = "15rem";
     changeElements(".score", score);
-    changeElements(".guess", "");
+    document.querySelector(".guess").value = "";
     changeElements(".message", "Start guessing...");
     document.querySelector("body").style.backgroundColor = "#222";
 });

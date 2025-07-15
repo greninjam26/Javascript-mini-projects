@@ -3,36 +3,40 @@ let target = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 let highScore = 0;
 
+function changeElements(element, newValue) {
+    document.querySelector(element).textContent = newValue;
+}
+
 document.querySelector(".check").addEventListener("click", function () {
     const guess = Number(document.querySelector(".guess").value);
     // when there is no number
     if (!guess) {
-        document.querySelector(".message").textContent = "🚫 No number!";
+        changeElements(".message", "🚫 No number!");
     }
     // when the user guess the number
     else if (guess === target) {
-        document.querySelector(".message").textContent = "🎉 Correct Number!";
-        document.querySelector(".number").textContent = target;
+        changeElements(".message", "🎉 Correct Number!");
+        changeElements(".number", target);
 
         document.querySelector("body").style.backgroundColor = "#60b347";
         document.querySelector(".number").style.width = "30rem";
         if (score > highScore) {
             highScore = score;
-            document.querySelector(".highscore").textContent = highScore;
+            changeElements(".highscore", highScore);
         }
     }
     // when guess is wrong
     else if (guess !== target) {
         // update the score
         if (score) {
-            document.querySelector(".message").textContent = guess > target ? "📈 Too high!" : "📉 Too low!";
+            changeElements(".message", guess > target ? "📈 Too high!" : "📉 Too low!");
             score--;
-            document.querySelector(".score").textContent = score;
+            changeElements(".score", score);
         }
         // lost the game
         else {
-            document.querySelector(".message").textContent = "💥 You lost the game :(";
-            document.querySelector(".score").textContent = 0;
+            changeElements(".message", "💥 You lost the game :(");
+            changeElements(".score", score);
         }
     }
 });
@@ -40,10 +44,10 @@ document.querySelector(".check").addEventListener("click", function () {
 document.querySelector(".again").addEventListener("click", function () {
     score = 20;
     target = Math.trunc(Math.random() * 20) + 1;
-    document.querySelector(".number").textContent = "?";
+    changeElements(".number", "?");
     document.querySelector(".number").style.width = "15rem";
-    document.querySelector(".score").textContent = score;
-    document.querySelector(".guess").value = "";
-    document.querySelector(".message").textContent = "Start guessing...";
+    changeElements(".score", score);
+    changeElements(".guess", "");
+    changeElements(".message", "Start guessing...");
     document.querySelector("body").style.backgroundColor = "#222";
 });

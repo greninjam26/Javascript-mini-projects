@@ -21,25 +21,11 @@ document.querySelector(".check").addEventListener("click", function () {
             document.querySelector(".highscore").textContent = highScore;
         }
     }
-    // when the guess is too high
-    else if (guess >= target) {
+    // when guess is wrong
+    else if (guess !== target) {
         // update the score
         if (score) {
-            document.querySelector(".message").textContent = "📈 Too high!";
-            score--;
-            document.querySelector(".score").textContent = score;
-        }
-        // lost the game
-        else {
-            document.querySelector(".message").textContent = "💥 You lost the game :(";
-            document.querySelector(".score").textContent = 0;
-        }
-    }
-    // when the guess is too low
-    else if (guess <= target) {
-        // update the score
-        if (score) {
-            document.querySelector(".message").textContent = "📉 Too low!";
+            document.querySelector(".message").textContent = guess > target ? "📈 Too high!" : "📉 Too low!";
             score--;
             document.querySelector(".score").textContent = score;
         }

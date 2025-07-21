@@ -30,9 +30,10 @@ document.querySelector("button").addEventListener("click", function () {
     }
     len += 5;
     for (const [i, variable] of variables.entries()) {
-        const [first, second] = variable.trim().split("_");
-        const firstC = first.toLowerCase();
-        const secondC = (second[0].toUpperCase() + second.slice(1).toLowerCase());
-        console.log((firstC+secondC).padEnd(len, " ")+"✅".repeat(i+1));
+        const [first, second] = variable.toLowerCase().trim().split("_");
+        const ans =
+            (first + second[0].toUpperCase() + second.slice(1)).padEnd(len) +
+            "✅".repeat(i + 1);
+        console.log(ans);
     }
 });

@@ -128,7 +128,7 @@ const whereAmI = function (lat, lng) {
         .then(data => {
             // 3. Once you have the data, take a look at it in the console to see all the attributes that you received about the provided location. Then, using this data, log a message like this to the console: “You are in Berlin, Germany”
             console.log(data);
-            console.log(`You are in ${data.principalSubdivision}, ${data.countryName}`);
+            console.log(`You are in ${data.city}, ${data.countryName}`);
             getCountryData(data.countryName, "name");
         })
         // 4. Chain a .catch method to the end of the promise chain and log errors to the console
@@ -160,9 +160,9 @@ btnStart.addEventListener("click", function () {
         }
     );
 });
-// Coordinates 1: 52.508, 13.381 (Latitude, Longitude)
-whereAmI(52.508, 13.381);
-// § Coordinates 2: 19.037, 72.873
-whereAmI(19.037, 72.873);
-// § Coordinates 3: -33.933, 18.474
-whereAmI(-33.933, 18.474);
+// // Coordinates 1: 52.508, 13.381 (Latitude, Longitude)
+// whereAmI(52.508, 13.381);
+// // § Coordinates 2: 19.037, 72.873
+// whereAmI(19.037, 72.873);
+// // § Coordinates 3: -33.933, 18.474
+// whereAmI(-33.933, 18.474);

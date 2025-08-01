@@ -24,7 +24,10 @@ const createCountryCard = function (data, className = "") {
         </article>
     `;
     countriesContainer.insertAdjacentHTML("beforeend", html);
-    countriesContainer.style.opacity = 1;
+};
+
+const displayError = function (msg) {
+    countriesContainer.insertAdjacentText("beforeend", msg);
 };
 
 const getCountryData = function (country, stats, className = false) {
@@ -70,6 +73,7 @@ const getCountryData = function (country, stats, className = false) {
     //     neighbourInfos.forEach(nei => createCountryCard(nei, "neighbour"));
     // });
     request
+        // .then() will be executed only when a promise is fulfilled
         .then(response => response.json())
         .then(function (returned) {
             console.log(returned);
@@ -100,7 +104,11 @@ const getCountryData = function (country, stats, className = false) {
             // }
         })
         .then(response => response.json())
-        .then(country => createCountryCard(country, "neighbour"));
+        .then(country => createCountryCard(country, "neighbour"))
+        // this will catches the error no matter where it is
+        .catch(error => displayError(`This is not right ${error.message}`))
+        // this will always execute no matter if the promise is fulfilled
+        .finally(() => (countriesContainer.style.opacity = 1));
 };
 
 btnStart.addEventListener("click", function () {

@@ -30,6 +30,12 @@ const displayError = function (msg) {
     countriesContainer.insertAdjacentText("beforeend", msg);
 };
 
+const getPosition = function () {
+    return new Promise(function (resolve, reject) {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+};
+
 const getData = function (url, errorMsg = "ERROR") {
     return fetch(url).then(response => {
         if (!response.ok) {
@@ -150,15 +156,10 @@ btnStart.addEventListener("click", function () {
 
     /////////////
     // where am I
-    navigator.geolocation.getCurrentPosition(
-        function (pos) {
-            const { lat, lng } = pos.coords;
-            whereAmI(lat, lng);
-        },
-        function () {
-            alert("can't find your location");
-        }
-    );
+    getPosition().then(pos => {
+        const { lat, lng } = pos.coords;
+        whereAmI(lat, lng);
+    });
 });
 // // Coordinates 1: 52.508, 13.381 (Latitude, Longitude)
 // whereAmI(52.508, 13.381);

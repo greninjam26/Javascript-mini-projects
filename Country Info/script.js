@@ -185,27 +185,33 @@ const createImage = function (imgPath) {
         console.log(image);
         image.src = imgPath;
         // 2. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. The fulfilled value should be the image element itself. In case there is an error loading the image (listen for the'error' event), reject the promise
-        images.insertAdjacentElement("beforeend", image);
-        resolve();
-        reject(new Error("Image Path no valid...."));
+        image.addEventListener("load", function () {
+            images.append(image);
+            resolve(image);
+        });
+        image.addEventListener("error", function () {
+            reject(new Error("Image Path no valid...."));
+        });
     });
 };
 // PART 2
+let currentImg;
 // 4. Consume the promise using .then and also add an error handler
 createImage("img/Ash-Greninja-1.png")
-    .then(() => {
+    .then(img => {
         // 5. After the image has loaded, pause execution for 2 seconds using the 'wait' function we created earlier
-        return wait(5);
+        currentImg = img;
+        return wait(2);
     })
     .then(() => {
         // 6. After the 2 seconds have passed, hide the current image, and load a second image
-        // images.style.display = "none";
+        currentImg.style.display = "none";
         createImage("img/Ash-Greninja-2.png");
         // 7. After the second image has loaded, pause execution for 2 seconds again
-        return wait(5);
+        return wait(2);
     })
     // 8. After the 2 seconds have passed, hide the current image
-    .then(() => (images.style.display = "none"))
+    .then(() => (currentImg.style.display = "none"))
     .catch(err => console.error(err));
 
 // Test data: Images in the img folder. Test the error handler by passing a wrong

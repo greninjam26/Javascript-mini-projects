@@ -196,24 +196,59 @@ const createImage = function (imgPath) {
 };
 // PART 2
 let currentImg;
-// 4. Consume the promise using .then and also add an error handler
-createImage("img/Ash-Greninja-1.png")
-    .then(img => {
-        // 5. After the image has loaded, pause execution for 2 seconds using the 'wait' function we created earlier
-        currentImg = img;
-        return wait(2);
-    })
-    .then(() => {
-        // 6. After the 2 seconds have passed, hide the current image, and load a second image
-        currentImg.style.display = "none";
-        createImage("img/Ash-Greninja-2.png");
-        // 7. After the second image has loaded, pause execution for 2 seconds again
-        return wait(2);
-    })
-    // 8. After the 2 seconds have passed, hide the current image
-    .then(() => (currentImg.style.display = "none"))
-    .catch(err => console.error(err));
+// // 4. Consume the promise using .then and also add an error handler
+// createImage("img/Ash-Greninja-1.png")
+//     .then(img => {
+//         // 5. After the image has loaded, pause execution for 2 seconds using the 'wait' function we created earlier
+//         currentImg = img;
+//         return wait(2);
+//     })
+//     .then(() => {
+//         // 6. After the 2 seconds have passed, hide the current image, and load a second image
+//         currentImg.style.display = "none";
+//         createImage("img/Ash-Greninja-2.png").then(img => (currentImg = img));
+//         // 7. After the second image has loaded, pause execution for 2 seconds again
+//         return wait(2);
+//     })
+//     // 8. After the 2 seconds have passed, hide the current image
+//     .then(() => (currentImg.style.display = "none"))
+//     .catch(err => console.error(err));
 
 // Test data: Images in the img folder. Test the error handler by passing a wrong
 // image path. Set the network speed to “Fast 3G” in the dev tools Network tab,
 // otherwise images load too fast
+
+// PART 1
+// 1. Write an async function 'loadNPause' that recreates Challenge #2, this time using async/await (only the part where the promise is consumed, reuse the 'createImage' function from before)
+// 2. Compare the two versions, think about the big differences, and see which one you like more
+// 3. Don't forget to test the error handler
+const loadNPause = async function () {
+    try {
+        const img1 = await createImage("img/Ash-Greninja-1.png");
+        await wait(2);
+        img1.style.display = "none";
+        const img2 = await createImage("img/Ash-Greninja-2.png");
+        await wait(2);
+        img2.style.display = "none";
+    } catch (err) {
+        console.error(err);
+    }
+};
+// loadNPause();
+// PART 2
+// 1. Create an async function 'loadAll' that receives an array of image paths 'imgArr'
+const loadAll = async function (imgArr) {
+    // 2. Use .map to loop over the array, to load all the images with the 'createImage' function (call the resulting array 'imgs')
+    const imgs = imgArr.map(async img => await createImage(img));
+    // 3. Check out the 'imgs' array in the console! Is it like you expected?
+    console.log(imgs);
+    // 4. Use a promise combinator function to actually get the images from the array 😉
+    const images = await Promise.all(imgs);
+    console.log(images);
+    // 5. Add the 'parallel' class to all the images (it has some CSS styles)
+    images.forEach(img => img.classList.add("parallel"));
+};
+loadAll(["img/Ash-Greninja-1.png", "img/Ash-Greninja-2.png"]);
+
+// Test data Part 2: ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg'].
+// To test, turn off the 'loadNPause' function
